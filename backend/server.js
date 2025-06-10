@@ -3,9 +3,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import productRoutes from "./routes/productRoutes.js"
-
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
+import { sql } from "./config/db.js"
 
 const app = express();
 const port = 3000;
@@ -17,11 +16,32 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
-  res.send("hello");
+res.send("hello");
 });
 
 app.use("/api/products", productRoutes);
 
-app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
+async function initDB() {
+try {
+  await sql`
+    CREATE TABLE IF NOT EXISTS PRODUCTS (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      image VARCHAR(255) NOT NULL,
+      price DECIMAL(10, 2) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+
+  console.log("Initialize Database successfully")
+} catch(error) {
+  console.log("Error connecting to Database: " + error);
+}
+};
+
+initDB().then(() => {
+  app.listen(port, () => {
+    console.log(`server is running on port ${port}`);
+  });
 });
