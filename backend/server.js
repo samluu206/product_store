@@ -2,6 +2,8 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
+import productRoutes from "./routes/productRoutes.js"
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -17,6 +19,8 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => {
   res.send("hello");
 });
+
+app.use("/api/products", productRoutes);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
