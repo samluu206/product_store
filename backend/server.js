@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
-res.send("hello");
+  res.send("hello");
 });
 
 app.use("/api/products", productRoutes);
@@ -42,6 +42,6 @@ try {
 
 initDB().then(() => {
   app.listen(port, () => {
-    console.log(`server is running on port ${port}`);
+    console.log(`Server is running at http://localhost:${port}`);
   });
 });
