@@ -1,4 +1,5 @@
 import arcjet, { tokenBucket, shield, detectBot, slidingWindow } from "@arcjet/node";
+
 import "dotenv/config";
 
 // init arcjet
@@ -19,9 +20,9 @@ export const aj = arcjet({
     // rate limiting
     tokenBucket({
       mode: "LIVE",
-      refillRate: 20,
+      refillRate: 5,   // mỗi 5 giây chỉ hồi 2 token
       interval: 5,
-      capacity: 20,
+      capacity: 5,
     }),
   ],
 });
