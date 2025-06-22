@@ -2,11 +2,12 @@ import { Link, useResolvedPath } from "react-router-dom";
 import { ShoppingCartIcon } from "lucide-react";
 import { ShoppingBagIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
+import { useProductStore } from "../store/useProductStore";
 
 const Navbar = () => {
   const {pathname} = useResolvedPath();
   const isHomePage = pathname == "/"; 
-  const products = {};
+  const { products } = useProductStore();
 
   return (
     <div className="bg-base-100/80 backdrop-blur-lg border-b border-base-content/10 sticky top-0 z-50">
