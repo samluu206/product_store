@@ -6,12 +6,18 @@ import productRoutes from "./routes/productRoutes.js"
 import "dotenv/config";
 import { sql } from "./config/db.js";
 import { aj } from "./lib/arcjet.js";
+import path from "path";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+const __dirname = path.resolve(); 
 
 // setup middleware
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false
+  })
+);
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
@@ -49,9 +55,14 @@ app.use(async (req, res, next) => {
 
 app.use("/api/products", productRoutes);
 
-app.get("/", (req, res) => {
-  res.send("hello");
-});
+if (process.env.NODE_ENV === "production") {
+  // server our react app
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  app.get(/(.*)/, (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
 
 async function initDB() {
 try {
