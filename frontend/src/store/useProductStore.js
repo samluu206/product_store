@@ -9,7 +9,7 @@ export const useProductStore = create((set, get) => ({
   error: null,
 
   fetchProducts: async () => {
-    set({loading: true});
+    set({ loading: true });
     try {
       const respone = await axios.get(`${BASE_URL}/api/products`);
       set({products: respone.data.data, error: null});
@@ -18,6 +18,20 @@ export const useProductStore = create((set, get) => ({
       else set({error: "Something went wrong", products: []});
     } finally {
       set({loading: false});
+    }
+  },
+
+  deleteProduct: async (id) => {
+    console.log("deleteProduct", id);
+    set({ loading: true });
+    try {
+      await axios.delete(`${BASE_URL}/api/products/${id}`);
+      set(prev => ({ products: prev.products.filter(product => product.id !== id) }));
+    } catch(error) {
+      console.log("Error in deleteProduct function", error);
+      toast.error("Something went wrong");
+    } finally {
+      set({ loading: false });
     }
   }
 }));
