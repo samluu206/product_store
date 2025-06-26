@@ -21,6 +21,16 @@ function ProductPage() {
     fetchProduct(id);
   }, [fetchProduct, id]);
 
+  useEffect(() => {
+    if (currentProduct?.[0]) {
+      setFormData({
+        name: currentProduct[0].name || "",
+        price: currentProduct[0].price || "",
+        image: currentProduct[0].image || "",
+      });
+    }
+  }, [currentProduct]);
+
   const handleDelete = async () => {
     await deleteProduct(id);
     navigate("/");
