@@ -16,6 +16,7 @@ This project demonstrates a complete product management system built with React 
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [Contact Information](#contact-information)
+- [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -80,6 +81,13 @@ We welcome contributions!
 - Commit your changes (`git commit -m 'Add AmazingFeature'`).
 - Push to your branch (`git push origin feature/AmazingFeature`).
 - Open a pull request with a description of your changes.
+
+---
+
+## **Acknowledgments**
+
+This project is based on a tutorial by [Codesistency](https://www.youtube.com/@codesistency).  
+I have extended and adapted it to suit my own learning goals and preferences.
 
 ---
 
